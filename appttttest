@@ -1,0 +1,33 @@
+[mitm]
+# 这里包含了 YAML 中所有的 hostnames 以及脚本中涉及到的域名
+hostname = api.revenuecat.com, buy.itunes.apple.com, api.picsart.com, api-account.kinemasters.com, us-central1-alight-creative.cloudfunctions.net, api.adapty.io, carrotweather.herokuapp.com, order.creativeappnow.com, api.mwm-users.com, us-central1-muslim-pro-app.cloudfunctions.net, prod.studysmarter.de, api.qonversion.io, subscription.grammarly.com, api.esound.app, api.purchasely.io, api.sandbox.love, subscriptions.songshift.com, api.adblockpro.app, mobile-api.adguard.org, license.pdfexpert.com, api-fra.vivacut.com, ILoveDevTheDev.com
+
+[rewrite_local]
+# 对应 YAML 中的 header_rewrites (删除 RevenueCat 的 ETag)
+^https?://api\.revenuecat\.com/.+/(receipts$|subscribers/?(.*?)*$) 1 header-remove X-RevenueCat-ETag
+^https?://api\.revenuecat\.com/.+/(receipts$|subscribers/?(.*?)*$) 2 header-remove x-revenuecat-etag
+
+[script]
+# 对应 YAML 中的 scriptings (注意：QX 使用 url 作为远程脚本加载方式)
+response^https?://api\.revenuecat\.com/.+/(receipts$|subscribers/[^/]+$), AppRCTesters, https://apptesters.org/egern/AutoRC.js, 0, 5
+response^https://api\.adapty\.io/api/v1/sdk/analytics/profiles, AppAdTesters, https://apptesters.org/egern/Adapty.js, 0, 5
+response^https://order\.creativeappnow\.com/iap/receipt, AppFMTesters, https://apptesters.org/egern/Facemoji.js, 0, 5
+response^https?://license\.pdfexpert\.com/api/2\.0/(calendarslite|pdfexpert6|documents)/subscription/(refresh|check), AppReTesters, https://apptesters.org/egern/readdle.js, 0, 5
+response^https?://buy\.itunes\.apple\.com/verifyReceipt, AppitTesters, https://apptesters.org/egern/iTunes.js, 0, 5
+response^us-central1-muslim-pro-app\.cloudfunctions\.net/GetUserPremiumInfo, AppMuTesters, https://apptesters.org/egern/MuslimPro.js, 0, 5
+response^https?://subscription\.grammarly\.com/api/v1/subscription, AppGrTesters, https://apptesters.org/egern/Grammarly.js, 0, 5
+response^api\.esound\.app/account, AppeSTesters, https://apptesters.org/egern/eSound.js, 0, 5
+response^https://api\.purchasely\.io/paab/user_purchases, AppPurTesters, https://apptesters.org/egern/purchasely.js, 0, 5
+response^prod\.studysmarter\.de/payments/info, AppVaTesters, https://apptesters.org/egern/Vaia.js, 0, 5
+response^api\.qonversion\.io/v1/user/init, AppQOTesters, https://apptesters.org/egern/qonversion.js, 0, 5
+response^https://api\.mwm-users\.com/me/features, AppDJTesters, https://apptesters.org/egern/edjingMix.js, 0, 5
+response^https://api-fra\.vivacut\.com/api/rest/commerce/integrate/vip/perform, AppVCTesters, https://apptesters.org/egern/VivaCut.js, 0, 5
+response^https://carrotweather\.herokuapp\.com/parse/functions/findSubscriptionsForUserId, AppCaTesters, https://apptesters.org/egern/Carrot.js, 0, 5
+response^https://api-account\.kinemasters\.com/v2/user/subscribe, AppKineTesters, https://apptesters.org/egern/KineMaster.js, 0, 5
+request^https://api\.picsart\.com/gw-v2/shop/subscription/apple/purchases, AppPicTesters, https://apptesters.org/egern/PicsArt.js, 0, 5
+response^https://us-central1-alight-creative\.cloudfunctions\.net/getAccountStatusAndLicenses, AppAMTesters, https://apptesters.org/egern/AlightMotion.js, 0, 5
+response^api\.sandbox\.love/accounts/current, AppSaTesters, https://apptesters.org/egern/SandBox.js, 0, 5
+response^subscriptions\.songshift\.com/validate, AppSSesters, https://apptesters.org/egern/SongShift.js, 0, 5
+response^api\.adblockpro\.app/verify, AppADBTesters, https://apptesters.org/egern/AdblockPro.js, 0, 5
+response^https?://mobile-api\.adguard\.org/api/.+?/ios_validate_receipt/(.*?), AppADGTesters, https://apptesters.org/egern/AdGuardPro.js, 0, 5
+response^ILoveDevTheDev\.com, AppDTesters, URL2Script.com, 0, 5
