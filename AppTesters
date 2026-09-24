@@ -90,117 +90,111 @@ script-providers:
     interval: 86400
 
 http:
-  rewrite:
-    - match: ^https?://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$)
-      name: X-RevenueCat-ETag
-      action: delete
-      type: request-header
-    - match: ^https?://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$)
-      name: x-revenuecat-etag
-      action: delete
-      type: request-header
+  header-rewrite:
+    - '^https?://api\.revenuecat\.com/.+/(receipts$|subscribers/?(.*?)*$) request-del X-RevenueCat-ETag'
+    - '^https?://api\.revenuecat\.com/.+/(receipts$|subscribers/?(.*?)*$) request-del x-revenuecat-etag'
   script:
-    - match: ^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$)
+    - match: '^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$)'
       name: AppRCTesters
       type: response
       require-body: true
       timeout: 10
-    - match: https://api.adapty.io/api/v1/sdk/analytics/profiles
+    - match: 'https://api\.adapty\.io/api/v1/sdk/analytics/profiles'
       name: AppAdTesters
       type: response
       require-body: true
       timeout: 10
-    - match: https://order.creativeappnow.com/iap/receipt
+    - match: 'https://order\.creativeappnow\.com/iap/receipt'
       name: AppFMTesters
       type: response
       require-body: true
       timeout: 10
-    - match: https:\/\/license\.pdfexpert\.com\/api\/2\.0\/(calendarslite|pdfexpert6|documents)\/subscription\/(refresh|check)
+    - match: 'https:\/\/license\.pdfexpert\.com\/api\/2\.0\/(calendarslite|pdfexpert6|documents)\/subscription\/(refresh|check)'
       name: AppReTesters
       type: response
       require-body: true
       timeout: 10
-    - match: ^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt
+    - match: '^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt'
       name: AppitTesters
       type: response
       require-body: true
       timeout: 10
-    - match: us-central1-muslim-pro-app.cloudfunctions.net/GetUserPremiumInfo
+    - match: 'us-central1-muslim-pro-app\.cloudfunctions\.net/GetUserPremiumInfo'
       name: AppMuTesters
       type: response
       require-body: true
       timeout: 10
-    - match: ^https?:\/\/subscription\.grammarly\.com\/api\/v1\/subscription$
+    - match: '^https?:\/\/subscription\.grammarly\.com\/api\/v1\/subscription$'
       name: AppGrTesters
       type: response
       require-body: true
       timeout: 10
-    - match: api.esound.app/account
+    - match: 'api\.esound\.app/account'
       name: AppeSTesters
       type: response
       require-body: true
       timeout: 10
-    - match: https://api.purchasely.io/paab/user_purchases
+    - match: 'https://api\.purchasely\.io/paab/user_purchases'
       name: AppPurTesters
       type: response
       require-body: true
       timeout: 10
-    - match: prod.studysmarter.de/payments/info
+    - match: 'prod\.studysmarter\.de/payments/info'
       name: AppVaTesters
       type: response
       require-body: true
       timeout: 10
-    - match: api.qonversion.io/v1/user/init
+    - match: 'api\.qonversion\.io/v1/user/init'
       name: AppQOTesters
       type: response
       require-body: true
       timeout: 10
-    - match: https://api.mwm-users.com/me/features
+    - match: 'https://api\.mwm-users\.com/me/features'
       name: AppDJTesters
       type: response
       require-body: true
       timeout: 10
-    - match: https://api-fra.vivacut.com/api/rest/commerce/integrate/vip/perform
+    - match: 'https://api-fra\.vivacut\.com/api/rest/commerce/integrate/vip/perform'
       name: AppVCTesters
       type: response
       require-body: true
       timeout: 10
-    - match: https://carrotweather.herokuapp.com/parse/functions/findSubscriptionsForUserId
+    - match: 'https://carrotweather\.herokuapp\.com/parse/functions/findSubscriptionsForUserId'
       name: AppCaTesters
       type: response
       require-body: true
       timeout: 10
-    - match: https://api-account.kinemasters.com/v2/user/subscribe
+    - match: 'https://api-account\.kinemasters\.com/v2/user/subscribe'
       name: AppKineTesters
       type: response
       require-body: true
       timeout: 10
-    - match: https://api.picsart.com/gw-v2/shop/subscription/apple/purchases
+    - match: 'https://api\.picsart\.com/gw-v2/shop/subscription/apple/purchases'
       name: AppPicTesters
       type: request
       require-body: true
       timeout: 10
-    - match: https://us-central1-alight-creative.cloudfunctions.net/getAccountStatusAndLicenses
+    - match: 'https://us-central1-alight-creative\.cloudfunctions\.net/getAccountStatusAndLicenses'
       name: AppAMTesters
       type: response
       require-body: true
       timeout: 10
-    - match: api.sandbox.love/accounts/current
+    - match: 'api\.sandbox\.love/accounts/current'
       name: AppSaTesters
       type: response
       require-body: true
       timeout: 10
-    - match: subscriptions.songshift.com/validate
+    - match: 'subscriptions\.songshift\.com/validate'
       name: AppSSesters
       type: response
       require-body: true
       timeout: 10
-    - match: api.adblockpro.app/verify
+    - match: 'api\.adblockpro\.app/verify'
       name: AppADBTesters
       type: response
       require-body: true
       timeout: 10
-    - match: ^https:\/\/mobile-api\.adguard\.org\/api\/.+\/ios_validate_receipt\/(.*?)
+    - match: '^https:\/\/mobile-api\.adguard\.org\/api\/.+\/ios_validate_receipt\/(.*?)'
       name: AppADGTesters
       type: response
       require-body: true
