@@ -1,0 +1,207 @@
+name: App Testers (Stash版)
+description: 由 Egern 转换而来的 Stash 脚本覆写规则合集
+
+mitm:
+  - "api.revenuecat.com"
+  - "buy.itunes.apple.com"
+  - "api.picsart.com"
+  - "api-account.kinemasters.com"
+  - "us-central1-alight-creative.cloudfunctions.net"
+  - "api.adapty.io"
+  - "carrotweather.herokuapp.com"
+  - "order.creativeappnow.com"
+  - "api.mwm-users.com"
+  - "us-central1-muslim-pro-app.cloudfunctions.net"
+  - "prod.studysmarter.de"
+  - "api.qonversion.io"
+  - "subscription.grammarly.com"
+  - "api.esound.app"
+  - "api.purchasely.io"
+  - "api.sandbox.love"
+  - "subscriptions.songshift.com"
+  - "api.adblockpro.app"
+  - "mobile-api.adguard.org"
+  - "license.pdfexpert.com"
+  - "api-fra.vivacut.com"
+
+script-providers:
+  AppRCTesters:
+    url: https://apptesters.org/egern/AutoRC.js
+    interval: 86400
+  AppAdTesters:
+    url: https://apptesters.org/egern/Adapty.js
+    interval: 86400
+  AppFMTesters:
+    url: https://apptesters.org/egern/Facemoji.js
+    interval: 86400
+  AppReTesters:
+    url: https://apptesters.org/egern/readdle.js
+    interval: 86400
+  AppitTesters:
+    url: https://apptesters.org/egern/iTunes.js
+    interval: 86400
+  AppMuTesters:
+    url: https://apptesters.org/egern/MuslimPro.js
+    interval: 86400
+  AppGrTesters:
+    url: https://apptesters.org/egern/Grammarly.js
+    interval: 86400
+  AppeSTesters:
+    url: https://apptesters.org/egern/eSound.js
+    interval: 86400
+  AppPurTesters:
+    url: https://apptesters.org/egern/purchasely.js
+    interval: 86400
+  AppVaTesters:
+    url: https://apptesters.org/egern/Vaia.js
+    interval: 86400
+  AppQOTesters:
+    url: https://apptesters.org/egern/qonversion.js
+    interval: 86400
+  AppDJTesters:
+    url: https://apptesters.org/egern/edjingMix.js
+    interval: 86400
+  AppVCTesters:
+    url: https://apptesters.org/egern/VivaCut.js
+    interval: 86400
+  AppCaTesters:
+    url: https://apptesters.org/egern/Carrot.js
+    interval: 86400
+  AppKineTesters:
+    url: https://apptesters.org/egern/KineMaster.js
+    interval: 86400
+  AppPicTesters:
+    url: https://apptesters.org/egern/PicsArt.js
+    interval: 86400
+  AppAMTesters:
+    url: https://apptesters.org/egern/AlightMotion.js
+    interval: 86400
+  AppSaTesters:
+    url: https://apptesters.org/egern/SandBox.js
+    interval: 86400
+  AppSSesters:
+    url: https://apptesters.org/egern/SongShift.js
+    interval: 86400
+  AppADBTesters:
+    url: https://apptesters.org/egern/AdblockPro.js
+    interval: 86400
+  AppADGTesters:
+    url: https://apptesters.org/egern/AdGuardPro.js
+    interval: 86400
+
+http:
+  rewrite:
+    - match: ^https?://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$)
+      name: X-RevenueCat-ETag
+      action: delete
+      type: request-header
+    - match: ^https?://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$)
+      name: x-revenuecat-etag
+      action: delete
+      type: request-header
+  script:
+    - match: ^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$)
+      name: AppRCTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: https://api.adapty.io/api/v1/sdk/analytics/profiles
+      name: AppAdTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: https://order.creativeappnow.com/iap/receipt
+      name: AppFMTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: https:\/\/license\.pdfexpert\.com\/api\/2\.0\/(calendarslite|pdfexpert6|documents)\/subscription\/(refresh|check)
+      name: AppReTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: ^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt
+      name: AppitTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: us-central1-muslim-pro-app.cloudfunctions.net/GetUserPremiumInfo
+      name: AppMuTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: ^https?:\/\/subscription\.grammarly\.com\/api\/v1\/subscription$
+      name: AppGrTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: api.esound.app/account
+      name: AppeSTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: https://api.purchasely.io/paab/user_purchases
+      name: AppPurTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: prod.studysmarter.de/payments/info
+      name: AppVaTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: api.qonversion.io/v1/user/init
+      name: AppQOTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: https://api.mwm-users.com/me/features
+      name: AppDJTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: https://api-fra.vivacut.com/api/rest/commerce/integrate/vip/perform
+      name: AppVCTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: https://carrotweather.herokuapp.com/parse/functions/findSubscriptionsForUserId
+      name: AppCaTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: https://api-account.kinemasters.com/v2/user/subscribe
+      name: AppKineTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: https://api.picsart.com/gw-v2/shop/subscription/apple/purchases
+      name: AppPicTesters
+      type: request
+      require-body: true
+      timeout: 10
+    - match: https://us-central1-alight-creative.cloudfunctions.net/getAccountStatusAndLicenses
+      name: AppAMTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: api.sandbox.love/accounts/current
+      name: AppSaTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: subscriptions.songshift.com/validate
+      name: AppSSesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: api.adblockpro.app/verify
+      name: AppADBTesters
+      type: response
+      require-body: true
+      timeout: 10
+    - match: ^https:\/\/mobile-api\.adguard\.org\/api\/.+\/ios_validate_receipt\/(.*?)
+      name: AppADGTesters
+      type: response
+      require-body: true
+      timeout: 10
